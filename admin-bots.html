@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Bots</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="./config.js" type="module"></script>
+    <script src="admin-bots.js" type="module"></script>
+</head>
+<body id="adminBotsPage">
+    <div class="container">
+        <header>
+            <img src="./image/b5.png" alt="Logo" class="logo">
+            <h1>All Bots</h1>
+            <a href="admin.html" class="btn-secondary">Back to Dashboard</a>
+        </header>
+        <table id="userBotsTable">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Phone Number</th>
+                    <th>Status</th>
+                    <th>Memory Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Bots will be dynamically added here -->
+            </tbody>
+        </table>
+<section id="metricsSection">
+    <h2>All User Metrics</h2>
+    <table id="metricsTable">
+        <thead>
+            <tr>
+                <th>Auth ID</th>
+                <th>Phone Number</th>
+                <th>Message Processing Time (ms)</th>
+                <th>Queue Processing Time (ms)</th>
+                <th>Command Processing Time (ms)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Metrics will be dynamically added here -->
+        </tbody>
+    </table>
+</section>
+    </div>
+</body>
+</html>

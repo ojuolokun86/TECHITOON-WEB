@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Register Bot</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+        <script src="register-bot.js" type="module"></script>
+    </head>
+<body>
+    <div class="container">
+        <header>
+            <img src="./image/logo.jpg" alt="Logo" class="logo">
+            <h1>Register Bot</h1>
+            <a href="dashboard.html" class="btn-primary">Back to Dashboard</a>
+        </header>
+
+        <section class="form-section">
+            <h2>Enter Phone Number</h2>
+            <form id="registerForm">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+                <button type="submit" class="btn-primary">Register</button>
+            </form>
+            <p id="registerResponseMessage" class="message"></p>
+            <div id="qrCodeContainer" class="qr-container"></div>
+        </section>
+    </div>
+</body>
+</html>

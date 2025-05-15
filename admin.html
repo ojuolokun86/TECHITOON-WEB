@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:,">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="./config.js" type="module"></script>
+    <script src="admin.js" type="module"></script>
+</head>
+<body id="adminPage">
+    <div class="container">
+        <header>
+            <img src="./image/b5.png" alt="Logo" class="logo">
+            <h1>Admin Dashboard</h1>
+            <a href="index.html" class="btn-primary">Logout</a>
+        </header>
+
+        <!-- Message Section -->
+        <section id="responseMessageSection" class="message-section">
+            <p id="responseMessage" class="message"></p>
+        </section>
+       <section id="adminNotificationSection">
+            <h2>Send Notification</h2>
+            <textarea id="notificationMessageInput" placeholder="Enter your notification message..."></textarea>
+            <button id="sendNotificationButton" class="btn-primary">Send Notification</button>
+        </section>
+
+        <section id="complaintsSection">
+             <h2>User Complaints</h2>
+             <ul id="complaintsList" class="scrollable-list">
+             <!-- Complaints will be dynamically added here -->
+             </ul>
+        </section>
+
+        <section id="tokenManagementSection">
+            <h2>Token Management</h2>
+            <form id="generateTokenForm">
+                <label for="authIdInput">Auth ID:</label>
+                <input type="text" id="authIdInput" placeholder="Enter Auth ID" required>
+                <label for="subscriptionLevel">Subscription Level:</label>
+                <select id="subscriptionLevel" required>
+                    <option value="basic">Basic</option>
+                    <option value="gold">Gold</option>
+                    <option value="premium">Premium</option>
+                </select>
+                <button type="submit" class="btn-primary">Generate Token</button>
+            </form>
+            <p id="generateTokenResponseMessage" class="message"></p>
+        </section>
+       <section class="user-list-section">
+            <h2>All Users</h2>
+            <table id="userTableMemory">
+                <thead>
+                    <tr>
+                        <th>Phone Number</th>
+                        <th>Status</th>
+                        <th>Max RAM (MB)</th>
+                        <th>Max ROM (MB)</th>
+                        <th>Memory Usage</th>
+                        <th>Update Limits</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Users will be dynamically added here -->
+                </tbody>
+            </table>
+        </section>
+
+       <section id="sendUserNotificationSection">
+            <h2>Send Notification to a Specific User</h2>
+            <form id="sendUserNotificationForm">
+                <label for="authIdInput">Auth ID:</label>
+                <input type="text" id="authIdInput" placeholder="Enter Auth ID" required>
+                <label for="messageInput">Message:</label>
+                <textarea id="messageInput" placeholder="Enter your message..." required></textarea>
+                <button type="submit" class="btn-primary">Send Notification</button>
+            </form>
+            <p id="sendNotificationResponseMessage" class="message"></p>
+        </section>
+
+        <section class="user-list-section">
+            <h2>All Users</h2>
+            <table id="userTableAuth">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Auth ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Users will be dynamically added here -->
+                </tbody>
+            </table>
+        </section>
+        <section class="global-actions">
+            <h2>Global Actions</h2>
+            <button id="viewAllBotsButton" class="btn-primary">View All Bots</button>
+        </section>
+
+        <section id="deleteUserSection">
+            <h2>Delete User Account</h2>
+            <input type="text" id="authIdInput" placeholder="Enter Auth ID" />
+            <button id="deleteUserButton" class="btn-danger">Delete User</button>
+            <p id="deleteUserResponseMessage" class="message"></p>
+        </section>
+        <section class="global-actions">
+            <h2>Global Actions</h2>
+            <button id="deleteAllUsersButton" class="btn-danger">Delete All Users</button>
+            <p id="deleteResponseMessage" class="message"></p>
+        </section>
+    </div>
+</body>
+</html>
