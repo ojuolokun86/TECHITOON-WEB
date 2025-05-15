@@ -564,3 +564,54 @@ header img.logo {
         gap: 8px;
     }
 }
+
+
+/* Add to your styles.css or at the end of the file */
+
+/* Forgot Password Form Specific Styles */
+#forgotPasswordForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#forgotPasswordForm label {
+    font-size: 16px;
+    color: #00aaff;
+    margin-bottom: 5px;
+}
+
+#forgotPasswordForm input[type="email"],
+#forgotPasswordForm input[type="password"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #1e1e2f;
+    color: #e0e0e0;
+}
+
+#forgotPasswordForm input:focus {
+    outline: none;
+    border-color: #00aaff;
+    box-shadow: 0 0 5px #00aaff;
+}
+
+#forgotPasswordForm button {
+    margin-top: 10px;
+}
+
+#resetResponseMessage {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 15px;
+}
+
+@media (max-width: 480px) {
+    #forgotPasswordForm {
+        max-width: 95%;
+        gap: 10px;
+    }
+}
