@@ -66,21 +66,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch all users from the backend
     const fetchMemoryUsers = async () => {
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/admin/users`);
-            const data = await response.json();
-
-            if (response.ok) {
-                populateMemoryUserTable(data.users);
-                displayMessage('✅ Users fetched successfully.');
-            } else {
-                displayMessage(`❌ Failed to fetch users: ${data.message}`, false);
-            }
-        } catch (error) {
-            displayMessage('❌ Error fetching users.', false);
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/admin/users`);
+        const data = await response.json();
+        if (response.ok) {
+            // Each user already has phoneNumber and authId
+            populateMemoryUserTable(data.users);
+            displayMessage('✅ Users fetched successfully.');
+        } else {
+            displayMessage(`❌ Failed to fetch users: ${data.message}`, false);
         }
-    };
-
+    } catch (error) {
+        displayMessage('❌ Error fetching users.', false);
+    }
+};
     
    const populateMemoryUserTable = (users) => {
     userTableMemoryBody.innerHTML = ''; // Clear existing rows
@@ -153,17 +152,27 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLimitsCell.appendChild(updateButton);
         row.appendChild(updateLimitsCell);
 
+       // Auth ID (VISIBLE)
+        const authIdCell = document.createElement('td');
+        authIdCell.textContent = user.authId || user.auth_id || '';
+        authIdCell.classList.add('auth-id-cell');
+        row.appendChild(authIdCell);
+
         // Actions (Delete and Restart)
         const actionsCell = document.createElement('td');
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.classList.add('btn-danger');
-        deleteButton.addEventListener('click', () => deleteUser(user.phoneNumber));
+        deleteButton.addEventListener('click', () => {
+            deleteUser(user.phoneNumber, user.authId);
+        });
 
         const restartButton = document.createElement('button');
         restartButton.textContent = 'Restart';
         restartButton.style.marginLeft = '10px';
-        restartButton.addEventListener('click', () => restartBot(user.phoneNumber));
+        restartButton.addEventListener('click', () => {
+            restartBot(user.phoneNumber, user.authId);
+        });
 
         actionsCell.appendChild(deleteButton);
         actionsCell.appendChild(restartButton);
