@@ -235,6 +235,7 @@ const updateMemoryLimits = async (phoneNumber, maxRam, maxRom) => {
 
     // Restart a bot
     const restartBot = async (phoneNumber, authId) => {
+        console.log('🔄 Restarting bot for phone number:', phoneNumber, authId); // Debug log
         try {
             const response = await fetch(`${API_BASE_URL}/api/admin/restart-bot/${phoneNumber}`, {
                 method: 'POST',
@@ -243,6 +244,7 @@ const updateMemoryLimits = async (phoneNumber, maxRam, maxRom) => {
             });
 
             const data = await response.json();
+            console.log('🔄 Restart response:', data); // Debug log
             if (response.ok) {
                 displayMessage(`✅ Bot for ${phoneNumber} restarted successfully.`);
             } else {
