@@ -386,14 +386,17 @@ const fetchNotifications = async () => {
             const notificationHistory = document.getElementById('notificationHistory');
             notificationHistory.innerHTML = ''; // Clear existing notifications
 
-           data.notifications.forEach((notification) => {
+          data.notifications.forEach((notification) => {
                 const { date, time } = formatDateTime(notification.timestamp);
                 const li = document.createElement('li');
+                li.classList.add('notification-card');
                 li.innerHTML = `
-                    <span class="notif-date">${date}</span>
-                    <span class="notif-time">${time}</span>
-                    <span class="sender">[${notification.sender}]</span>
-                    <span class="message">${notification.message}</span>
+                    <div class="notification-header">
+                        <span class="notif-sender">${notification.sender}</span>
+                        <span class="notif-date">${date}</span>
+                        <span class="notif-time">${time}</span>
+                    </div>
+                    <div class="notification-message">${notification.message}</div>
                     ${notification.needsRescan ? `<button class="btn-primary rescan-button" data-phone="${notification.phoneNumber}">Rescan</button>` : ''}
                     <button class="btn-secondary mark-read-button" data-id="${notification.id}">Mark as Read</button>
                 `;
