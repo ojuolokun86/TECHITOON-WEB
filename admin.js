@@ -385,12 +385,13 @@ const fetchComplaints = async () => {
 fetchComplaints();
 
 document.getElementById('deleteUserButton').addEventListener('click', async () => {
-    const authId = document.getElementById('authIdInput').value.trim();
+    const authId = document.getElementById('authIdInputDelete').value.trim();
 
-    // if (!authId) {
-    //     alert('Please enter a valid Auth ID.');
-    //     return;
-    // }
+    console.log('Auth ID input value:', authId);
+    if (!authId) {
+        alert('Please enter a valid Auth ID.');
+        return;
+    }
 
     try {
         const response = await fetch(`${API_BASE_URL}/api/admin/delete-user`, {
@@ -426,13 +427,14 @@ document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('sendUserNotificationForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const authId = document.getElementById('authIdInput').value.trim();
+    const authId = document.getElementById('authIdInputNotify').value.trim();
     const message = document.getElementById('messageInput').value.trim();
+    console.log('🔍 Sending notification to Auth ID:', authId); // Debug log
 
-    // if (!authId || !message) {
-    //     alert('Please fill in both fields.');
-    //     return;
-    // }
+    if (!authId || !message) {
+        alert('Please fill in both fields.');
+        return;
+    }
 
     console.log('🔍 Sending notification to Auth ID:', authId); // Debug log
 
@@ -460,7 +462,7 @@ document.getElementById('sendUserNotificationForm').addEventListener('submit', a
 document.getElementById('generateTokenForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const authId = document.getElementById('authIdInput').value.trim();
+    const authId = document.getElementById('authIdInputToken').value.trim();
     const subscriptionLevel = document.getElementById('subscriptionLevel').value;
 
     try {

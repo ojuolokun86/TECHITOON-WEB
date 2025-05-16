@@ -38,7 +38,7 @@
             <h2>Token Management</h2>
             <form id="generateTokenForm">
                 <label for="authIdInput">Auth ID:</label>
-                <input type="text" id="authIdInput" placeholder="Enter Auth ID" required>
+                <input type="text" id="authIdInputToken" placeholder="Enter Auth ID" required>
                 <label for="subscriptionLevel">Subscription Level:</label>
                 <select id="subscriptionLevel" required>
                     <option value="basic">Basic</option>
@@ -74,7 +74,7 @@
             <h2>Send Notification to a Specific User</h2>
             <form id="sendUserNotificationForm">
                 <label for="authIdInput">Auth ID:</label>
-                <input type="text" id="authIdInput" placeholder="Enter Auth ID" required>
+                <input type="text" id="authIdInputNotify" placeholder="Enter Auth ID" required>
                 <label for="messageInput">Message:</label>
                 <textarea id="messageInput" placeholder="Enter your message..." required></textarea>
                 <button type="submit" class="btn-primary">Send Notification</button>
@@ -103,7 +103,7 @@
 
         <section id="deleteUserSection">
             <h2>Delete User Account</h2>
-            <input type="text" id="authIdInput" placeholder="Enter Auth ID" />
+           <input type="text" id="authIdInputDelete" placeholder="Enter Auth ID" />
             <button id="deleteUserButton" class="btn-danger">Delete User</button>
             <p id="deleteUserResponseMessage" class="message"></p>
         </section>
