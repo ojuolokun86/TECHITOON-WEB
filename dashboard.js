@@ -403,19 +403,16 @@ const fetchNotifications = async () => {
 };
 
 // Function to mark a notification as read
+// Example in dashboard.js
 const markNotificationAsRead = async (notificationId) => {
+    const authId = localStorage.getItem('auth_id');
     try {
-        const response = await fetch(`${API_BASE_URL}/api/user/notifications/${notificationId}`, {
-            method: 'DELETE',
+        const response = await fetch(`${API_BASE_URL}/api/user/notifications/${notificationId}/mark-read`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ authId }),
         });
-
-        const data = await response.json();
-        if (response.ok) {
-            alert('✅ Notification marked as read.');
-            fetchNotifications(); // Refresh notifications
-        } else {
-            alert(`❌ Failed to mark notification as read: ${data.message}`);
-        }
+        if (response.ok) fetchNotifications();
     } catch (error) {
         alert('❌ Error marking notification as read.');
     }

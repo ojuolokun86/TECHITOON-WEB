@@ -42,31 +42,31 @@
         <section id="tokenManagementSection">
             <h2>Token Management</h2>
             <form id="generateTokenForm">
-                <label for="authIdInput">Auth ID:</label>
+                <label for="authIdInputToken">Auth ID:</label>
                 <input type="text" id="authIdInputToken" placeholder="Enter Auth ID" required>
-               <div class="subscription-level-group">
-                        <label class="subscription-label">Subscription Level:</label>
-                        <div class="subscription-options">
-                            <label class="subscription-option basic">
-                                <input type="radio" name="subscriptionLevel" value="basic" checked>
-                                <span class="option-title">Basic</span>
-                                <span class="option-desc">Limited features</span>
-                            </label>
-                            <label class="subscription-option gold">
-                                <input type="radio" name="subscriptionLevel" value="gold">
-                                <span class="option-title">Gold</span>
-                                <span class="option-desc">More features</span>
-                            </label>
-                            <label class="subscription-option premium">
-                                <input type="radio" name="subscriptionLevel" value="premium">
-                                <span class="option-title">Premium</span>
-                                <span class="option-desc">All features</span>
-                            </label>
-                        </div>
+                <div class="subscription-level-group">
+                    <label class="subscription-label">Subscription Level:</label>
+                    <div class="subscription-options">
+                        <label class="subscription-option basic">
+                            <input type="radio" name="subscriptionLevel" value="basic" checked>
+                            <span class="option-title">Basic</span>
+                            <span class="option-desc">Limited features</span>
+                        </label>
+                        <label class="subscription-option gold">
+                            <input type="radio" name="subscriptionLevel" value="gold">
+                            <span class="option-title">Gold</span>
+                            <span class="option-desc">More features</span>
+                        </label>
+                        <label class="subscription-option premium">
+                            <input type="radio" name="subscriptionLevel" value="premium">
+                            <span class="option-title">Premium</span>
+                            <span class="option-desc">All features</span>
+                        </label>
                     </div>
-                </select>
+                </div>
                 <button type="submit" class="btn-primary">Generate Token</button>
             </form>
+            ...
             <p id="generateTokenResponseMessage" class="message"></p>
         </section>
        <section class="user-list-section">

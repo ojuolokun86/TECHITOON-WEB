@@ -462,9 +462,15 @@ document.getElementById('sendUserNotificationForm').addEventListener('submit', a
 document.getElementById('generateTokenForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const authId = document.getElementById('authIdInputToken').value.trim();
-    const subscriptionLevel = document.getElementById('subscriptionLevel').value;
+   const authIdInput = document.getElementById('authIdInputToken');
+    if (!authIdInput) {
+        alert('Auth ID input field for token generation not found.');
+        return;
+    }
+    const authId = authIdInput.value.trim();
 
+    // For subscription level, get the checked radio button:
+    const subscriptionLevel = document.querySelector('input[name="subscriptionLevel"]:checked').value;
     try {
         const response = await fetch(`${API_BASE_URL}/api/admin/generate-token`, {
             method: 'POST',
