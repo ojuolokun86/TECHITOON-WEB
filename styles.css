@@ -1290,3 +1290,103 @@ section {
         padding: 8px 4px;
     }
 }
+
+.subscription-level-group {
+    margin-bottom: 18px;
+}
+
+.subscription-label {
+    color: #00aaff;
+    font-weight: 600;
+    font-size: 1.08rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.subscription-options {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.subscription-option {
+    background: #232346;
+    border: 2px solid #00aaff;
+    border-radius: 8px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-width: 110px;
+    position: relative;
+}
+
+.subscription-option input[type="radio"] {
+    accent-color: #00aaff;
+    margin-right: 8px;
+    margin-bottom: 6px;
+    transform: scale(1.2);
+}
+
+.subscription-option .option-title {
+    font-size: 1.08rem;
+    font-weight: bold;
+    color: #00aaff;
+    margin-bottom: 2px;
+}
+
+.subscription-option .option-desc {
+    font-size: 0.95rem;
+    color: #b0b8c9;
+}
+
+.subscription-option.basic {
+    border-color: #00aaff;
+}
+.subscription-option.gold {
+    border-color: #ffd700;
+}
+.subscription-option.premium {
+    border-color: #ff4e9b;
+}
+
+.subscription-option input[type="radio"]:checked + .option-title {
+    text-decoration: underline;
+}
+
+.subscription-option:hover, .subscription-option input[type="radio"]:focus + .option-title {
+    border-color: #007bff;
+    box-shadow: 0 0 8px #00aaff44;
+}
+
+@media (max-width: 600px) {
+    .subscription-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .subscription-option {
+        width: 100%;
+        min-width: unset;
+        padding: 10px 12px;
+    }
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+}
+
+#botInfoTable {
+    min-width: 700px; /* Ensures table is scrollable on small screens */
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: rgba(24, 24, 40, 0.98);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,170,255,0.06);
+}
