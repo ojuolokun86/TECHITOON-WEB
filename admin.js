@@ -2,18 +2,20 @@ import { API_BASE_URL, SOCKET_BASE_URL, createSocket } from "./config.js";
 console.log('🔗 Connected to API server:', API_BASE_URL); // Debug log
 const socket = createSocket();
 
-document.addEventListener('DOMContentLoaded', () => {
-    const userTableMemoryBody = document.querySelector('#userTableMemory tbody'); // For memory-related data
-    const deleteAllUsersButton = document.getElementById('deleteAllUsersButton');
-    const responseMessage = document.getElementById('responseMessage');
-    const userTableAuthBody = document.querySelector('#userTableAuth tbody');
-    console.log('🔍 userTableAuthBody:', userTableAuthBody); // Debug log
 function formatDateTime(isoString) {
     const dateObj = new Date(isoString);
     const date = dateObj.toLocaleDateString();
     const time = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     return { date, time };
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const userTableMemoryBody = document.querySelector('#userTableMemory tbody'); // For memory-related data
+    const deleteAllUsersButton = document.getElementById('deleteAllUsersButton');
+    const responseMessage = document.getElementById('responseMessage');
+    const userTableAuthBody = document.querySelector('#userTableAuth tbody');
+    console.log('🔍 userTableAuthBody:', userTableAuthBody); // Debug log
+
 
     if (!userTableAuthBody) {
         console.error('❌ userTableAuthBody is not defined. Ensure the #userTableAuth tbody element exists in the HTML.');
