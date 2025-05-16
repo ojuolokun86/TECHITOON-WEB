@@ -1390,3 +1390,36 @@ section {
     overflow: hidden;
     box-shadow: 0 1px 6px rgba(0,170,255,0.06);
 }
+
+/* Make action buttons more accessible on mobile */
+#botInfoTable td:last-child {
+    min-width: 120px;
+    white-space: nowrap;
+    padding: 8px 4px;
+}
+
+@media (max-width: 700px) {
+    #botInfoTable {
+        min-width: 800px; /* Increase if you have many columns */
+    }
+    #botInfoTable td, #botInfoTable th {
+        font-size: 0.92rem;
+        padding: 8px 4px;
+    }
+    .btn-primary, .btn-danger {
+        font-size: 0.95rem;
+        padding: 8px 10px;
+        margin: 2px 0;
+        min-width: 80px;
+    }
+}
+@media (max-width: 600px) {
+    .logout-btn {
+        margin-top: 12px;
+        width: 90%;
+        max-width: 220px;
+        text-align: center;
+        align-self: center;
+        display: block;
+    }
+}

@@ -238,7 +238,7 @@ const initializeChart = (data) => {
 };
 
 const fetchPerformanceTrends = async () => {
-    const authId = localStorage.getItem('auth_id'); // Retrieve auth_id from local storage
+    const authId = localStorage.getItem('auth_id');
     console.log(`📤 Sending request to fetch analytics for authId: ${authId}`);
 
     try {
@@ -246,8 +246,25 @@ const fetchPerformanceTrends = async () => {
         const data = await response.json();
 
         if (response.ok) {
-            console.log('✅ Analytics data fetched successfully:', data.analytics);
-            initializeChart(data.analytics); // Render the chart
+            // Filter analytics to only last 5 minutes
+            const now = Date.now();
+            const fiveMinutesAgo = now - 5 * 60 * 1000;
+            const filteredLabels = [];
+            const filteredData = [];
+
+            data.analytics.labels.forEach((label, idx) => {
+                // Assume label is a timestamp or can be parsed as one
+                const labelTime = new Date(label).getTime();
+                if (labelTime >= fiveMinutesAgo) {
+                    filteredLabels.push(label);
+                    filteredData.push(data.analytics.commandProcessingTime[idx]);
+                }
+            });
+
+            initializeChart({
+                labels: filteredLabels,
+                commandProcessingTime: filteredData
+            });
         } else {
             console.error('❌ Failed to fetch analytics data:', data.message);
         }
