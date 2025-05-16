@@ -548,16 +548,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (response.ok) {
             notificationHistory.innerHTML = '';
            data.notifications.forEach((notification) => {
-                const { date, time } = formatDateTime(notification.timestamp);
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <span class="notif-date">${date}</span>
-                    <span class="notif-time">${time}</span>
-                    <span class="sender">[${notification.sender}]</span>
-                    <span class="message">${notification.message}</span>
-                `;
-                notificationHistory.appendChild(li);
-            });
+                    const { date, time } = formatDateTime(notification.timestamp);
+                    const li = document.createElement('li');
+                    li.classList.add('notification-card');
+                    li.innerHTML = `
+                        <div class="notification-header">
+                            <span class="notif-sender">${notification.sender}</span>
+                            <span class="notif-date">${date}</span>
+                            <span class="notif-time">${time}</span>
+                        </div>
+                        <div class="notification-message">${notification.message}</div>
+                        ${notification.needsRescan ? `<button class="btn-primary rescan-button" data-phone="${notification.phoneNumber}">Rescan</button>` : ''}
+                        <button class="btn-secondary mark-read-button" data-id="${notification.id}">Mark as Read</button>
+                    `;
+                    notificationHistory.appendChild(li);
+                });
         } else {
             const li = document.createElement('li');
             li.textContent = `❌ ${data.message}`;
