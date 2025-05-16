@@ -16,8 +16,8 @@ const loginResponseMessage = document.getElementById('loginResponseMessage');
 
 // Show the login form when "Login" is clicked
 loginButton.addEventListener('click', () => {
-    buttonSection.style.display = 'none';
-    loginSection.style.display = 'block';
+    buttonSection.classList.add('hidden');
+    loginSection.classList.remove('hidden');
 });
 
 // Redirect to the registration page when "Register" is clicked
