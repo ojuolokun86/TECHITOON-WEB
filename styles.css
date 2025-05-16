@@ -1446,3 +1446,26 @@ section {
         padding: 10px 8px;
     }
 }
+
+.subscription-badge {
+    padding: 3px 12px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: bold;
+    margin-left: 6px;
+    margin-right: 6px;
+    font-size: 1rem;
+    display: inline-block;
+    min-width: 70px;
+    text-align: center;
+}
+.subscription-basic {
+    background: #007bff;
+}
+.subscription-gold {
+    background: #ffd700;
+    color: #222;
+}
+.subscription-premium {
+    background: #ff4e9b;
+}

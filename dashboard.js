@@ -470,8 +470,29 @@ const fetchSubscriptionDetails = async () => {
         const data = await response.json();
         console.log('📥 Received subscription details:', data);
 
+        const subscriptionLevelSpan = document.getElementById('subscriptionLevel');
+        // Remove previous badge classes
+        subscriptionLevelSpan.classList.remove('subscription-basic', 'subscription-gold', 'subscription-premium');
+
         if (response.ok) {
-            document.getElementById('subscriptionLevel').textContent = data.subscriptionLevel;
+            // Set badge color based on level
+            let badgeClass = '';
+            switch ((data.subscriptionLevel || '').toLowerCase()) {
+                case 'basic':
+                    badgeClass = 'subscription-basic';
+                    break;
+                case 'gold':
+                    badgeClass = 'subscription-gold';
+                    break;
+                case 'premium':
+                    badgeClass = 'subscription-premium';
+                    break;
+                default:
+                    badgeClass = '';
+            }
+            subscriptionLevelSpan.textContent = data.subscriptionLevel;
+            if (badgeClass) subscriptionLevelSpan.classList.add(badgeClass);
+
             document.getElementById('daysLeft').textContent = data.daysLeft;
         } else if (response.status === 404) {
             // Fetch the user's email for display
