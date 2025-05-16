@@ -387,10 +387,10 @@ fetchComplaints();
 document.getElementById('deleteUserButton').addEventListener('click', async () => {
     const authId = document.getElementById('authIdInput').value.trim();
 
-    if (!authId) {
-        alert('Please enter a valid Auth ID.');
-        return;
-    }
+    // if (!authId) {
+    //     alert('Please enter a valid Auth ID.');
+    //     return;
+    // }
 
     try {
         const response = await fetch(`${API_BASE_URL}/api/admin/delete-user`, {
@@ -429,10 +429,10 @@ document.getElementById('sendUserNotificationForm').addEventListener('submit', a
     const authId = document.getElementById('authIdInput').value.trim();
     const message = document.getElementById('messageInput').value.trim();
 
-    if (!authId || !message) {
-        alert('Please fill in both fields.');
-        return;
-    }
+    // if (!authId || !message) {
+    //     alert('Please fill in both fields.');
+    //     return;
+    // }
 
     console.log('🔍 Sending notification to Auth ID:', authId); // Debug log
 
