@@ -1423,3 +1423,26 @@ section {
         display: block;
     }
 }
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+}
+#metricsTable {
+    min-width: 700px;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    #forgotPasswordForm {
+        max-width: 98%;
+        padding: 10px 4px;
+    }
+    #forgotPasswordForm input,
+    #forgotPasswordForm button {
+        font-size: 1rem;
+        padding: 10px 8px;
+    }
+}
