@@ -23,6 +23,23 @@ const modalMessage = document.getElementById('modalMessage');
 const confirmButton = document.getElementById('confirmButton');
 const cancelButton = document.getElementById('cancelButton');
 
+// Format date as "YYYY-MM-DD" and time as "HH:mm"
+function formatDateTime(dateString) {
+    const date = new Date(dateString);
+    // Pad with leading zeros
+    const pad = (n) => n.toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1);
+    const day = pad(date.getDate());
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+    return {
+        date: `${year}-${month}-${day}`,
+        time: `${hours}:${minutes}`
+    };
+}
+
+
 // Chart.js Configuration
 let chartInstance = null;
 
@@ -369,10 +386,14 @@ const fetchNotifications = async () => {
             const notificationHistory = document.getElementById('notificationHistory');
             notificationHistory.innerHTML = ''; // Clear existing notifications
 
-            data.notifications.forEach((notification) => {
+           data.notifications.forEach((notification) => {
+                const { date, time } = formatDateTime(notification.timestamp);
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    [${notification.sender}] ${notification.timestamp}: ${notification.message}
+                    <span class="notif-date">${date}</span>
+                    <span class="notif-time">${time}</span>
+                    <span class="sender">[${notification.sender}]</span>
+                    <span class="message">${notification.message}</span>
                     ${notification.needsRescan ? `<button class="btn-primary rescan-button" data-phone="${notification.phoneNumber}">Rescan</button>` : ''}
                     <button class="btn-secondary mark-read-button" data-id="${notification.id}">Mark as Read</button>
                 `;
@@ -526,10 +547,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (response.ok) {
             notificationHistory.innerHTML = '';
-            data.notifications.forEach((notification) => {
+           data.notifications.forEach((notification) => {
+                const { date, time } = formatDateTime(notification.timestamp);
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <span class="timestamp">${new Date(notification.timestamp).toLocaleString()}</span>
+                    <span class="notif-date">${date}</span>
+                    <span class="notif-time">${time}</span>
                     <span class="sender">[${notification.sender}]</span>
                     <span class="message">${notification.message}</span>
                 `;

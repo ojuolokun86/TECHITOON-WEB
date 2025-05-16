@@ -1469,3 +1469,13 @@ section {
 .subscription-premium {
     background: #ff4e9b;
 }
+.notif-date {
+    color: #00aaff;
+    font-weight: bold;
+    margin-right: 8px;
+}
+.notif-time {
+    color: #ffd700;
+    font-weight: bold;
+    margin-right: 8px;
+}
