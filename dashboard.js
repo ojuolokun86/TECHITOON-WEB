@@ -39,6 +39,59 @@ function formatDateTime(dateString) {
     };
 }
 
+function renderNotificationList(notifications) {
+    const notificationHistory = document.getElementById('notificationHistory');
+    notificationHistory.innerHTML = ''; // Clear existing notifications
+
+    notifications.forEach((notification) => {
+        const { date, time } = formatDateTime(notification.timestamp);
+        let message = notification.message;
+
+        // Format expiration date in token messages
+        // Looks for "Expires on 2025-07-16T05:42:28.332Z"
+        const expMatch = message.match(/Expires on (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z)/);
+        if (expMatch) {
+            const expDate = expMatch[1];
+            const { date: expDateOnly, time: expTimeOnly } = formatDateTime(expDate);
+            // Replace the ISO string with formatted date and time
+            message = message.replace(
+                expDate,
+                `${expDateOnly} ${expTimeOnly}`
+            );
+        }
+
+        const li = document.createElement('li');
+        li.classList.add('notification-card');
+        li.innerHTML = `
+            <div class="notification-header">
+                <span class="notif-sender">${notification.sender}</span>
+                <span class="notif-date">${date}</span>
+                <span class="notif-time">${time}</span>
+            </div>
+            <div class="notification-message">${message}</div>
+            ${notification.needsRescan ? `<button class="btn-primary rescan-button" data-phone="${notification.phoneNumber}">Rescan</button>` : ''}
+            <button class="btn-secondary mark-read-button" data-id="${notification.id}">Mark as Read</button>
+        `;
+        notificationHistory.appendChild(li);
+    });
+
+    // Attach event listeners to "Mark as Read" buttons
+    document.querySelectorAll('.mark-read-button').forEach((button) => {
+        button.addEventListener('click', async (e) => {
+            const notificationId = e.target.getAttribute('data-id');
+            await markNotificationAsRead(notificationId);
+        });
+    });
+
+    // Attach event listeners to rescan buttons
+    document.querySelectorAll('.rescan-button').forEach((button) => {
+        button.addEventListener('click', (e) => {
+            const phoneNumber = e.target.getAttribute('data-phone');
+            window.location.href = `register-bot.html?phoneNumber=${phoneNumber}`;
+        });
+    });
+}
+
 
 // Chart.js Configuration
 let chartInstance = null;
@@ -383,49 +436,24 @@ const fetchNotifications = async () => {
         const data = await response.json();
 
         if (response.ok) {
-            const notificationHistory = document.getElementById('notificationHistory');
-            notificationHistory.innerHTML = ''; // Clear existing notifications
-
-          data.notifications.forEach((notification) => {
-                const { date, time } = formatDateTime(notification.timestamp);
-                const li = document.createElement('li');
-                li.classList.add('notification-card');
-                li.innerHTML = `
-                    <div class="notification-header">
-                        <span class="notif-sender">${notification.sender}</span>
-                        <span class="notif-date">${date}</span>
-                        <span class="notif-time">${time}</span>
-                    </div>
-                    <div class="notification-message">${notification.message}</div>
-                    ${notification.needsRescan ? `<button class="btn-primary rescan-button" data-phone="${notification.phoneNumber}">Rescan</button>` : ''}
-                    <button class="btn-secondary mark-read-button" data-id="${notification.id}">Mark as Read</button>
-                `;
-                notificationHistory.appendChild(li);
-            });
-
-            // Attach event listeners to "Mark as Read" buttons
-            document.querySelectorAll('.mark-read-button').forEach((button) => {
-                button.addEventListener('click', async (e) => {
-                    const notificationId = e.target.getAttribute('data-id');
-                    await markNotificationAsRead(notificationId);
-                });
-            });
-
-            // Attach event listeners to rescan buttons
-            document.querySelectorAll('.rescan-button').forEach((button) => {
-                button.addEventListener('click', (e) => {
-                    const phoneNumber = e.target.getAttribute('data-phone');
-                    window.location.href = `register-bot.html?phoneNumber=${phoneNumber}`;
-                });
-            });
+            renderNotificationList(data.notifications);
         } else {
-            console.error('❌ Failed to fetch notifications:', data.message);
+            const notificationHistory = document.getElementById('notificationHistory');
+            notificationHistory.innerHTML = '';
+            const li = document.createElement('li');
+            li.textContent = `❌ ${data.message}`;
+            li.classList.add('error');
+            notificationHistory.appendChild(li);
         }
     } catch (error) {
-        console.error('❌ Error fetching notifications:', error.message);
+        const notificationHistory = document.getElementById('notificationHistory');
+        notificationHistory.innerHTML = '';
+        const li = document.createElement('li');
+        li.textContent = '❌ Error fetching notifications. Please try again later.';
+        li.classList.add('error');
+        notificationHistory.appendChild(li);
     }
 };
-
 // Function to mark a notification as read
 // Example in dashboard.js
 const markNotificationAsRead = async (notificationId) => {
@@ -537,45 +565,13 @@ fetchSubscriptionDetails();
 document.addEventListener('DOMContentLoaded', async () => {
     const authId = localStorage.getItem('auth_id');
     if (!authId) {
+        const notificationHistory = document.getElementById('notificationHistory');
+        notificationHistory.innerHTML = '';
         const li = document.createElement('li');
         li.textContent = '❌ Auth ID is missing. Please log in again.';
         li.classList.add('error');
         notificationHistory.appendChild(li);
         return;
     }
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/api/user/notifications/${authId}`);
-        const data = await response.json();
-
-        if (response.ok) {
-            notificationHistory.innerHTML = '';
-           data.notifications.forEach((notification) => {
-                    const { date, time } = formatDateTime(notification.timestamp);
-                    const li = document.createElement('li');
-                    li.classList.add('notification-card');
-                    li.innerHTML = `
-                        <div class="notification-header">
-                            <span class="notif-sender">${notification.sender}</span>
-                            <span class="notif-date">${date}</span>
-                            <span class="notif-time">${time}</span>
-                        </div>
-                        <div class="notification-message">${notification.message}</div>
-                        ${notification.needsRescan ? `<button class="btn-primary rescan-button" data-phone="${notification.phoneNumber}">Rescan</button>` : ''}
-                        <button class="btn-secondary mark-read-button" data-id="${notification.id}">Mark as Read</button>
-                    `;
-                    notificationHistory.appendChild(li);
-                });
-        } else {
-            const li = document.createElement('li');
-            li.textContent = `❌ ${data.message}`;
-            li.classList.add('error');
-            notificationHistory.appendChild(li);
-        }
-    } catch (error) {
-        const li = document.createElement('li');
-        li.textContent = '❌ Error fetching notifications. Please try again later.';
-        li.classList.add('error');
-        notificationHistory.appendChild(li);
-    }
+    await fetchNotifications();
 });
