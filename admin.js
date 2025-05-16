@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const responseMessage = document.getElementById('responseMessage');
     const userTableAuthBody = document.querySelector('#userTableAuth tbody');
     console.log('🔍 userTableAuthBody:', userTableAuthBody); // Debug log
+function formatDateTime(isoString) {
+    const dateObj = new Date(isoString);
+    const date = dateObj.toLocaleDateString();
+    const time = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return { date, time };
+}
 
     if (!userTableAuthBody) {
         console.error('❌ userTableAuthBody is not defined. Ensure the #userTableAuth tbody element exists in the HTML.');
@@ -364,14 +370,26 @@ const fetchComplaints = async () => {
             const complaintsList = document.getElementById('complaintsList');
             complaintsList.innerHTML = ''; // Clear existing complaints
 
-            data.complaints.forEach((complaint) => {
+           data.complaints.forEach((complaint) => {
+                const { date, time } = formatDateTime(complaint.timestamp);
                 const li = document.createElement('li');
                 li.innerHTML = `
-                    <strong>Auth ID:</strong> ${complaint.auth_id} <br>
-                    <strong>Message:</strong> ${complaint.message} <br>
-                    <strong>Timestamp:</strong> ${complaint.timestamp}
+                    <div style="margin-bottom: 6px;">
+                        <span class="notif-date">${date}</span>
+                        <span class="notif-time">${time}</span>
+                    </div>
+                    <div><strong style="color:#ffd700;">Auth ID:</strong> <span style="color:#00aaff;font-weight:bold;">${complaint.auth_id}</span></div>
+                    <div style="margin: 8px 0 10px 0;"><strong style="color:#00aaff;">Message:</strong> <span style="color:#fff;">${complaint.message}</span></div>
+                    <button class="btn-secondary mark-read-complaint" data-timestamp="${complaint.timestamp}">Mark as Read</button>
                 `;
                 complaintsList.appendChild(li);
+
+                // Add event listener for this button
+                li.querySelector('.mark-read-complaint').addEventListener('click', async (e) => {
+                    const timestamp = e.target.getAttribute('data-timestamp');
+                    await fetch(`${API_BASE_URL}/api/admin/complaints/${timestamp}`, { method: 'DELETE' });
+                    fetchComplaints(); // Refresh the list
+                });
             });
         } else {
             console.error('❌ Failed to fetch complaints:', data.message);
@@ -487,4 +505,16 @@ document.getElementById('generateTokenForm').addEventListener('submit', async (e
     } catch (error) {
         document.getElementById('generateTokenResponseMessage').textContent = '❌ Error generating token.';
     }
+});
+
+
+
+
+// Add event listener after rendering:
+document.querySelectorAll('.mark-read-complaint').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+        const timestamp = e.target.getAttribute('data-timestamp');
+        await fetch(`${API_BASE_URL}/api/admin/complaints/${timestamp}`, { method: 'DELETE' });
+        fetchComplaints(); // Refresh the list
+    });
 });

@@ -190,14 +190,14 @@ const fetchBotInfo = async () => {
 
             // Populate bot info table
             console.log('✅ Populating bot info table...');
-            data.bots.forEach((bot) => {
+           data.bots.forEach((bot) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${bot.phoneNumber}</td>
                     <td><span class="badge ${bot.status === 'Active' ? 'badge-success' : 'badge-danger'}">${bot.status}</span></td>
                     <td>${bot.memoryUsage || 'N/A'} MB</td>
                     <td>${bot.uptime || 'N/A'}</td>
-                    <td>${bot.lastActive || 'N/A'}</td>
+                    <td>${bot.lastActive ? formatDateTime(bot.lastActive).date + ' ' + formatDateTime(bot.lastActive).time : 'N/A'}</td>
                     <td>${bot.version || 'N/A'}</td>
                     <td>
                         <button class="btn-primary" onclick="showConfirmation('restart', '${bot.phoneNumber}')">Restart</button>
@@ -538,6 +538,9 @@ const fetchSubscriptionDetails = async () => {
                     break;
                 case 'premium':
                     badgeClass = 'subscription-premium';
+                    break;
+                case 'trier':
+                    badgeClass = 'subscription-trier';
                     break;
                 default:
                     badgeClass = '';
