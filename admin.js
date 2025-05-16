@@ -372,7 +372,7 @@ const fetchComplaints = async () => {
             const complaintsList = document.getElementById('complaintsList');
             complaintsList.innerHTML = ''; // Clear existing complaints
 
-           data.complaints.forEach((complaint) => {
+          data.complaints.forEach((complaint) => {
                 const { date, time } = formatDateTime(complaint.timestamp);
                 const isDeletion = complaint.message && complaint.message.includes('[Account Deletion Request]');
                 const li = document.createElement('li');
@@ -399,13 +399,13 @@ const fetchComplaints = async () => {
                 }
                 complaintsList.appendChild(li);
 
-    // Add event listener for this button
-    li.querySelector('.mark-read-complaint').addEventListener('click', async (e) => {
-        const timestamp = e.target.getAttribute('data-timestamp');
-        await fetch(`${API_BASE_URL}/api/admin/complaints/${timestamp}`, { method: 'DELETE' });
-        fetchComplaints(); // Refresh the list
-    });
-});
+                // Add event listener for this button
+                li.querySelector('.mark-read-complaint').addEventListener('click', async (e) => {
+                    const timestamp = e.target.getAttribute('data-timestamp');
+                    await fetch(`${API_BASE_URL}/api/admin/complaints/${timestamp}`, { method: 'DELETE' });
+                    fetchComplaints(); // Refresh the list
+                });
+            });
         } else {
             console.error('❌ Failed to fetch complaints:', data.message);
         }
@@ -414,10 +414,6 @@ const fetchComplaints = async () => {
     }
 };
 
-if (isDeletion) {
-    li.classList.add('complaint-deletion');
-    li.querySelector('span').classList.add('deletion-message');
-}
 // Fetch complaints on page load
 fetchComplaints();
 
