@@ -1603,3 +1603,12 @@ section {
     background: #232346;
     box-shadow: 0 2px 8px rgba(0,170,255,0.08);
 }
+
+.complaint-deletion {
+    border-left: 6px solid #ff3b3b !important;
+    background: #2a1a1a !important;
+}
+.complaint-deletion .deletion-message {
+    color: #ff3b3b !important;
+    font-weight: bold;
+}

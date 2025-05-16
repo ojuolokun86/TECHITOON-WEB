@@ -374,25 +374,38 @@ const fetchComplaints = async () => {
 
            data.complaints.forEach((complaint) => {
                 const { date, time } = formatDateTime(complaint.timestamp);
+                const isDeletion = complaint.message && complaint.message.includes('[Account Deletion Request]');
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <div style="margin-bottom: 6px;">
                         <span class="notif-date">${date}</span>
                         <span class="notif-time">${time}</span>
                     </div>
-                    <div><strong style="color:#ffd700;">Auth ID:</strong> <span style="color:#00aaff;font-weight:bold;">${complaint.auth_id}</span></div>
-                    <div style="margin: 8px 0 10px 0;"><strong style="color:#00aaff;">Message:</strong> <span style="color:#fff;">${complaint.message}</span></div>
+                    <div>
+                        <strong style="color:#ffd700;">Auth ID:</strong>
+                        <span style="color:#00aaff;font-weight:bold;">${complaint.auth_id}</span>
+                    </div>
+                    <div style="margin: 8px 0 10px 0;">
+                        <strong style="color:#00aaff;">Message:</strong>
+                        <span style="color:${isDeletion ? '#ff3b3b' : '#fff'};font-weight:bold;">
+                            ${complaint.message}
+                        </span>
+                    </div>
                     <button class="btn-secondary mark-read-complaint" data-timestamp="${complaint.timestamp}">Mark as Read</button>
                 `;
+                if (isDeletion) {
+                    li.style.borderLeft = '6px solid #ff3b3b';
+                    li.style.background = '#2a1a1a';
+                }
                 complaintsList.appendChild(li);
 
-                // Add event listener for this button
-                li.querySelector('.mark-read-complaint').addEventListener('click', async (e) => {
-                    const timestamp = e.target.getAttribute('data-timestamp');
-                    await fetch(`${API_BASE_URL}/api/admin/complaints/${timestamp}`, { method: 'DELETE' });
-                    fetchComplaints(); // Refresh the list
-                });
-            });
+    // Add event listener for this button
+    li.querySelector('.mark-read-complaint').addEventListener('click', async (e) => {
+        const timestamp = e.target.getAttribute('data-timestamp');
+        await fetch(`${API_BASE_URL}/api/admin/complaints/${timestamp}`, { method: 'DELETE' });
+        fetchComplaints(); // Refresh the list
+    });
+});
         } else {
             console.error('❌ Failed to fetch complaints:', data.message);
         }
@@ -401,6 +414,10 @@ const fetchComplaints = async () => {
     }
 };
 
+if (isDeletion) {
+    li.classList.add('complaint-deletion');
+    li.querySelector('span').classList.add('deletion-message');
+}
 // Fetch complaints on page load
 fetchComplaints();
 
