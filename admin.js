@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
         row.innerHTML = `
             <td>${user.email || 'N/A'}</td>
             <td>${user.auth_id}</td>
-            <td>${user.subscription_status || 'N/A'}</td> <!-- Show subscription level -->
+            <td>${user.subscription_level || 'N/A'}</td>
+            <td>${user.days_left !== undefined ? user.days_left : 'N/A'}</td>
         `;
         userTableAuthBody.appendChild(row);
     });
