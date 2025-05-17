@@ -42,20 +42,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Function to populate the user table
-    const populateAuthUserTable = (users) => {
-        userTableAuthBody.innerHTML = ''; // Clear existing rows
+   const populateAuthUserTable = (users) => {
+    userTableAuthBody.innerHTML = ''; // Clear existing rows
 
-         users.forEach((user) => {
+    users.forEach((user) => {
         const row = document.createElement('tr');
-
         row.innerHTML = `
-            <td>${user.email || 'N/A'}</td> <!-- Handle missing email -->
-            <td>${user.auth_id}</td> <!-- Use auth_id as returned by the backend -->
+            <td>${user.email || 'N/A'}</td>
+            <td>${user.auth_id}</td>
+            <td>${user.subscription_status || 'N/A'}</td> <!-- Show subscription level -->
         `;
-
         userTableAuthBody.appendChild(row);
-        });
-    };
+    });
+};
 
     fetchAuthUsers(); // Call the function to fetch and populate the table
 
