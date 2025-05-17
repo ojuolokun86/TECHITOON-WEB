@@ -13,6 +13,8 @@ const buttonSection = document.getElementById('buttonSection');
 const loginSection = document.getElementById('loginSection');
 const loginForm = document.getElementById('loginForm');
 const loginResponseMessage = document.getElementById('loginResponseMessage');
+// Set current year dynamically
+document.getElementById('year').textContent = new Date().getFullYear();
 
 // Show the login form when "Login" is clicked
 loginButton.addEventListener('click', () => {

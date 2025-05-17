@@ -1701,3 +1701,227 @@ section {
   display: block;
   margin: 0 auto 16px auto;
 }
+
+/* --- About, Terms, Privacy Page Styles --- */
+.container {
+    max-width: 900px;
+    width: 90%;
+    margin: 30px auto 40px auto;
+    padding: 28px 20px 18px 20px;
+    background: rgba(30, 30, 47, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+header .logo {
+    max-width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    border: 3px solid #00aaff;
+    box-shadow: 0 2px 8px rgba(0,170,255,0.15);
+    background: #c91616;
+}
+
+header h1 {
+    font-size: 2.2rem;
+    color: #00aaff;
+    text-shadow: 0 2px 8px rgba(0,170,255,0.18);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+section {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+section h2 {
+    color: #ffd700;
+    font-size: 1.3rem;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-align: left;
+}
+
+section ul {
+    margin: 0 0 18px 18px;
+    padding: 0 0 0 18px;
+    color: #e0e0e0;
+}
+
+section ul li {
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+section p, section li {
+    color: #e0e0e0;
+    font-size: 1.08rem;
+    line-height: 1.7;
+}
+
+section a {
+    color: #00aaff;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+section a:hover {
+    color: #ffd700;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px 4px 8px 4px;
+    }
+    header h1 {
+        font-size: 1.2rem;
+    }
+    section h2 {
+        font-size: 1.05rem;
+    }
+    section p, section li {
+        font-size: 0.98rem;
+    }
+}
+
+/* Footer Styles */
+.footer {
+    width: 100%;
+    background: rgba(20, 30, 50, 0.98);
+    color: #e0e0e0;
+    padding: 32px 0 18px 0;
+    margin-top: 40px;
+    border-top: 3px solid #00aaff;
+    box-shadow: 0 -2px 16px rgba(0,170,255,0.08);
+    position: relative;
+    z-index: 2;
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 18px;
+    text-align: center;
+}
+
+.footer-content h3 {
+    color: #00aaff;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.footer-content h4, .footer-content h2 {
+    color: #ffd700;
+    font-size: 1.08rem;
+    margin: 18px 0 8px 0;
+    letter-spacing: 1px;
+}
+
+.footer-content p, .footer-content li {
+    color: #e0e0e0;
+    font-size: 1.05rem;
+    margin: 6px 0;
+    line-height: 1.7;
+}
+
+.footer-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.footer-content ul li {
+    display: inline-block;
+}
+
+.footer-content a {
+    color: #00aaff;
+    text-decoration: underline;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.footer-content a:hover {
+    color: #ffd700;
+}
+
+.footer-content .copyright {
+    margin-top: 18px;
+    color: #b0b8c9;
+    font-size: 0.98rem;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 600px) {
+    .footer-content {
+        padding: 0 6px;
+    }
+    .footer-content ul {
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer-content h3 {
+        font-size: 1.08rem;
+    }
+    .footer-content h4, .footer-content h2 {
+        font-size: 1rem;
+    }
+    .footer-content p, .footer-content li {
+        font-size: 0.98rem;
+    }
+}
+
+/* Back to Home Button Styles */
+.btn-primary, .back-home-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.08rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 18px 0 0 0;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,170,255,0.10);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+.btn-primary:hover, .back-home-btn:hover {
+    background-color: #0056b3;
+    color: #ffd700;
+    transform: translateY(-2px) scale(1.04);
+    text-decoration: none;
+}
+
+@media (max-width: 600px) {
+    .btn-primary, .back-home-btn {
+        width: 100%;
+        font-size: 1rem;
+        padding: 10px 0;
+        margin: 14px 0 0 0;
+    }
+}
