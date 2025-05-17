@@ -218,8 +218,16 @@ const fetchBotInfo = async () => {
 // Show confirmation modal
 const showConfirmation = (action, phoneNumber) => {
     confirmationModal.classList.remove('hidden');
+    let actionColor = '#00aaff'; // default blue
+    if (action === 'delete') actionColor = '#dc3545';
+    if (action === 'restart') actionColor = '#ffd700';
     modalMessage.innerHTML = `
-        <p>Are you sure you want to <strong>${action}</strong> the bot for <strong>${phoneNumber}</strong>?</p>
+        <span style="font-size:1.1rem;font-weight:bold;line-height:1.5;">
+            Are you sure you want to
+            <span style="color:${actionColor};text-transform:uppercase;">${action}</span>
+            the bot for
+            <span style="color:#00aaff;">${phoneNumber}</span>?
+        </span>
     `;
     confirmButton.onclick = () => {
         confirmationModal.classList.add('hidden');

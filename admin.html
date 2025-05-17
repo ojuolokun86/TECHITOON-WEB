@@ -121,6 +121,9 @@
             </table>
         </section>
         <section class="global-actions">
+            <button id="syncMemoryButton" class="btn-primary">Sync Memory to Supabase</button>
+        </section>
+        <section class="global-actions">
             <h2>Global Actions</h2>
             <button id="viewAllBotsButton" class="btn-primary">View All Bots</button>
         </section>
@@ -136,6 +139,17 @@
             <button id="deleteAllUsersButton" class="btn-danger">Delete All Users</button>
             <p id="deleteResponseMessage" class="message"></p>
         </section>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmationModal" class="modal hidden">
+        <div class="modal-content">
+            <span id="modalMessage"></span>
+            <div style="text-align:center;margin-top:20px;">
+            <button id="confirmButton" class="btn-primary">Confirm</button>
+            <button id="cancelButton" class="btn-danger" style="margin-left:10px;">Cancel</button>
+            </div>
+        </div>
+        </div>
     </div>
     <script src="admin.js" type="module"></script>
 </body>

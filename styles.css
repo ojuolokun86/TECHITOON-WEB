@@ -1612,3 +1612,92 @@ section {
     color: #ff3b3b !important;
     font-weight: bold;
 }
+
+/* Add to styles.css */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+}
+
+#metricsTable {
+    min-width: 700px; /* Ensures table is scrollable on small screens */
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: rgba(24, 24, 40, 0.98);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0,170,255,0.06);
+}
+
+@media (max-width: 700px) {
+    #metricsTable {
+        min-width: 800px; /* Increase if you have many columns */
+    }
+    #metricsTable td, #metricsTable th {
+        font-size: 0.92rem;
+        padding: 8px 4px;
+    }
+}
+
+@media (max-width: 700px) {
+    table, #metricsTable, #userBotsTable, #botInfoTable {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    th, td {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .btn-primary, .btn-danger {
+        font-size: 0.95rem;
+        padding: 8px 10px;
+        margin: 2px 0;
+        min-width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    th, td {
+        font-size: 12px;
+        padding: 8px 4px;
+    }
+    .btn-primary, .btn-danger {
+        font-size: 0.9rem;
+        padding: 6px 8px;
+        min-width: 70px;
+    }
+    .container {
+        padding: 6px;
+    }
+}
+
+/* Add to styles.css if not present */
+.modal {
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-content {
+  background: #232346;
+  color: #fff;
+  padding: 30px 20px;
+  border-radius: 10px;
+  min-width: 280px;
+  max-width: 90vw;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  text-align: center;
+}
+.hidden { display: none !important; }
+
+.modal-content img {
+  width: 100px;
+  max-width: 40vw;
+  display: block;
+  margin: 0 auto 16px auto;
+}

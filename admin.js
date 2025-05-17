@@ -172,23 +172,67 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteButton.textContent = 'Delete';
         deleteButton.classList.add('btn-danger');
         deleteButton.addEventListener('click', () => {
-            deleteUser(user.phoneNumber, user.authId);
-        });
+                showAdminConfirmation('delete', user.phoneNumber, user.authId || user.auth_id);
+         });
 
         const restartButton = document.createElement('button');
         restartButton.textContent = 'Restart';
         restartButton.style.marginLeft = '10px';
         restartButton.addEventListener('click', () => {
-            restartBot(user.phoneNumber, user.authId);
+             showAdminConfirmation('restart', user.phoneNumber, user.authId || user.auth_id);
         });
+
+        const stopButton = document.createElement('button');
+        stopButton.textContent = 'Stop';
+        stopButton.classList.add('btn-danger');
+        stopButton.style.marginLeft = '10px';
+        stopButton.addEventListener('click', () => {
+            showAdminConfirmation('stop', user.phoneNumber, user.authId || user.auth_id);
+        });
+
+        // Start Button
+        const startButton = document.createElement('button');
+        startButton.textContent = 'Start';
+        startButton.classList.add('btn-primary');
+        startButton.style.marginLeft = '10px';
+        startButton.addEventListener('click', () => {
+            showAdminConfirmation('start', user.phoneNumber, user.authId || user.auth_id);
+        });
+
 
         actionsCell.appendChild(deleteButton);
         actionsCell.appendChild(restartButton);
+        actionsCell.appendChild(stopButton);
+        actionsCell.appendChild(startButton);
         row.appendChild(actionsCell);
 
         userTableMemoryBody.appendChild(row);
     });
 };
+
+const adminConfirmationModal = document.getElementById('confirmationModal');
+const adminModalMessage = document.getElementById('modalMessage');
+const adminConfirmButton = document.getElementById('confirmButton');
+const adminCancelButton = document.getElementById('cancelButton');
+
+function showAdminConfirmation(action, phoneNumber, authId) {
+    adminConfirmationModal.classList.remove('hidden');
+    adminModalMessage.innerHTML = `
+        <img src="./image/beyond.jpg" alt="Confirmation Background" style="width:100%;max-width:200px;display:block;margin:auto;">
+        <p>Are you sure you want to <strong>${action}</strong> the bot for <strong>${phoneNumber}</strong>?</p>
+    `;
+    adminConfirmButton.onclick = async () => {
+        adminConfirmationModal.classList.add('hidden');
+        if (action === 'restart') await restartBot(phoneNumber, authId);
+        if (action === 'delete') await deleteUser(phoneNumber);
+        if (action === 'stop') await stopBot(phoneNumber);
+        if (action === 'start') await startBot(phoneNumber, authId);
+    };
+    adminCancelButton.onclick = () => adminConfirmationModal.classList.add('hidden');
+}
+
+// Attach to global for HTML inline use if needed
+window.showAdminConfirmation = showAdminConfirmation;
 
 const updateMemoryLimits = async (phoneNumber, maxRam, maxRom) => {
     try {
@@ -293,6 +337,31 @@ const updateMemoryLimits = async (phoneNumber, maxRam, maxRom) => {
         });
     };   
 
+    const stopBot = async (phoneNumber) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/admin/stop-bot/${phoneNumber}`, { method: 'POST' });
+        const data = await response.json();
+        alert(data.message);
+        fetchMemoryUsers();
+    } catch (error) {
+        alert('❌ Error stopping bot.');
+    }
+};
+
+const startBot = async (phoneNumber, authId) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/admin/start-bot/${phoneNumber}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ authId }),
+        });
+        const data = await response.json();
+        alert(data.message);
+        fetchMemoryUsers();
+    } catch (error) {
+        alert('❌ Error starting bot.');
+    }
+};
     // Delete all users
     deleteAllUsersButton.addEventListener('click', async () => {
         try {
@@ -522,7 +591,19 @@ document.getElementById('generateTokenForm').addEventListener('submit', async (e
     }
 });
 
-
+document.getElementById('syncMemoryButton').addEventListener('click', async () => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/admin/sync-memory`, { method: 'POST' });
+        const data = await response.json();
+        if (response.ok) {
+            alert('✅ Memory synced to Supabase.');
+        } else {
+            alert(`❌ Failed to sync memory: ${data.message}`);
+        }
+    } catch (error) {
+        alert('❌ Error syncing memory.');
+    }
+});
 
 
 // Add event listener after rendering:
