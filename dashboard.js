@@ -195,7 +195,8 @@ const fetchBotInfo = async () => {
                 row.innerHTML = `
                     <td>${bot.phoneNumber}</td>
                     <td><span class="badge ${bot.status === 'Active' ? 'badge-success' : 'badge-danger'}">${bot.status}</span></td>
-                    <td>${bot.memoryUsage || 'N/A'} MB</td>
+                    <td>${bot.ram || 'N/A'}</td>
+                    <td>${bot.rom || data.totalROM || 'N/A'}</td>
                     <td>${bot.uptime || 'N/A'}</td>
                     <td>${bot.lastActive ? formatDateTime(bot.lastActive).date + ' ' + formatDateTime(bot.lastActive).time : 'N/A'}</td>
                     <td>${bot.version || 'N/A'}</td>

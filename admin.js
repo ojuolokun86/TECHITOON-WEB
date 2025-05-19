@@ -89,124 +89,65 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 };
     
-   const populateMemoryUserTable = (users) => {
+  const populateMemoryUserTable = (users) => {
     userTableMemoryBody.innerHTML = ''; // Clear existing rows
 
     users.forEach((user) => {
-        const row = document.createElement('tr');
+        const rom = user.rom || 'N/A';
+        const authId = user.authId || user.auth_id || 'N/A';
 
-        // Phone Number
-        const phoneNumberCell = document.createElement('td');
-        phoneNumberCell.textContent = user.phoneNumber || 'N/A'; // Display 'N/A' if phoneNumber is missing
-        row.appendChild(phoneNumberCell);
+        if (user.bots && user.bots.length > 0) {
+            user.bots.forEach((bot) => {
+                const row = document.createElement('tr');
 
-        // Status
-        const statusCell = document.createElement('td');
-        statusCell.textContent = user.active ? 'Active' : 'Inactive'; // Correctly display active/inactive
-        row.appendChild(statusCell);
+                // Phone Number
+                row.innerHTML = `
+                    <td>${bot.phoneNumber || 'N/A'}</td>
+                    <td>${bot.status || 'Inactive'}</td>
+                    <td>${bot.ram !== undefined ? bot.ram : 'N/A'}</td>
+                    <td>${rom}</td>
+                    <td><input type="number" value="${bot.maxRam !== undefined ? bot.maxRam : 10}" class="memory-input"></td>
+                    <td><input type="number" value="${bot.maxRom !== undefined ? bot.maxRom : 200}" class="memory-input"></td>
+                    <td>${bot.memoryUsage !== undefined ? bot.memoryUsage : 'N/A'}</td>
+                    <td>
+                        <button class="btn-primary update-limits-btn">Update</button>
+                    </td>
+                    <td>${authId}</td>
+                    <td>
+                        <button class="btn-danger delete-btn">Delete</button>
+                        <button class="btn-primary restart-btn" style="margin-left:10px;">Restart</button>
+                        <button class="btn-danger stop-btn" style="margin-left:10px;">Stop</button>
+                        <button class="btn-primary start-btn" style="margin-left:10px;">Start</button>
+                    </td>
+                `;
 
-        // Max RAM
-        const maxRamCell = document.createElement('td');
-        const maxRamInput = document.createElement('input');
-        maxRamInput.type = 'number';
-        maxRamInput.value = user.maxRam || 10; // Use maxRam from the backend or default to 10
-        maxRamInput.classList.add('memory-input'); // Add a class for styling if needed
-        maxRamCell.appendChild(maxRamInput);
-        row.appendChild(maxRamCell);
-
-        // Max ROM
-        const maxRomCell = document.createElement('td');
-        const maxRomInput = document.createElement('input');
-        maxRomInput.type = 'number';
-        maxRomInput.value = user.maxRom || 50; // Use maxRom from the backend or default to 50
-        maxRomInput.classList.add('memory-input'); // Add a class for styling if needed
-        maxRomCell.appendChild(maxRomInput);
-        row.appendChild(maxRomCell);
-
-        // Memory Usage
-        const memoryUsageCell = document.createElement('td');
-        memoryUsageCell.textContent = user.memoryUsage || 'N/A'; // Display memory usage
-        row.appendChild(memoryUsageCell);
-
-        // Update Limits Button
-        const updateLimitsCell = document.createElement('td');
-        const updateButton = document.createElement('button');
-        updateButton.textContent = 'Update';
-        updateButton.classList.add('btn-primary'); // Add a class for styling if needed
-        updateButton.addEventListener('click', async () => {
-            const maxRam = parseInt(maxRamInput.value, 10);
-            const maxRom = parseInt(maxRomInput.value, 10);
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/admin/users/${user.phoneNumber}/memory-limits`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ maxRam, maxRom }),
+                // Add event listeners for actions
+                row.querySelector('.delete-btn').addEventListener('click', () => {
+                    showAdminConfirmation('delete', bot.phoneNumber, authId);
+                });
+                row.querySelector('.restart-btn').addEventListener('click', () => {
+                    showAdminConfirmation('restart', bot.phoneNumber, authId);
+                });
+                row.querySelector('.stop-btn').addEventListener('click', () => {
+                    showAdminConfirmation('stop', bot.phoneNumber, authId);
+                });
+                row.querySelector('.start-btn').addEventListener('click', () => {
+                    showAdminConfirmation('start', bot.phoneNumber, authId);
+                });
+                row.querySelector('.update-limits-btn').addEventListener('click', async () => {
+                    const maxRam = parseInt(row.querySelectorAll('input')[0].value, 10);
+                    const maxRom = parseInt(row.querySelectorAll('input')[1].value, 10);
+                    await updateMemoryLimits(bot.phoneNumber, maxRam, maxRom);
                 });
 
-                const data = await response.json();
-                if (response.ok) {
-                    displayMessage(`✅ Memory limits updated for user ${user.phoneNumber}.`);
-
-                    // Update the row with the new values
-                    memoryUsageCell.textContent = data.user.memory_usage || 'N/A'; // Update memory usage
-                } else {
-                    displayMessage(`❌ Failed to update memory limits for user ${user.phoneNumber}: ${data.message}`, false);
-                }
-            } catch (error) {
-                displayMessage(`❌ Error updating memory limits for user ${user.phoneNumber}.`, false);
-            }
-        });
-        updateLimitsCell.appendChild(updateButton);
-        row.appendChild(updateLimitsCell);
-
-       // Auth ID (VISIBLE)
-        const authIdCell = document.createElement('td');
-        authIdCell.textContent = user.authId || user.auth_id || '';
-        authIdCell.classList.add('auth-id-cell');
-        row.appendChild(authIdCell);
-
-        // Actions (Delete and Restart)
-        const actionsCell = document.createElement('td');
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.classList.add('btn-danger');
-        deleteButton.addEventListener('click', () => {
-                showAdminConfirmation('delete', user.phoneNumber, user.authId || user.auth_id);
-         });
-
-        const restartButton = document.createElement('button');
-        restartButton.textContent = 'Restart';
-        restartButton.style.marginLeft = '10px';
-        restartButton.addEventListener('click', () => {
-             showAdminConfirmation('restart', user.phoneNumber, user.authId || user.auth_id);
-        });
-
-        const stopButton = document.createElement('button');
-        stopButton.textContent = 'Stop';
-        stopButton.classList.add('btn-danger');
-        stopButton.style.marginLeft = '10px';
-        stopButton.addEventListener('click', () => {
-            showAdminConfirmation('stop', user.phoneNumber, user.authId || user.auth_id);
-        });
-
-        // Start Button
-        const startButton = document.createElement('button');
-        startButton.textContent = 'Start';
-        startButton.classList.add('btn-primary');
-        startButton.style.marginLeft = '10px';
-        startButton.addEventListener('click', () => {
-            showAdminConfirmation('start', user.phoneNumber, user.authId || user.auth_id);
-        });
-
-
-        actionsCell.appendChild(deleteButton);
-        actionsCell.appendChild(restartButton);
-        actionsCell.appendChild(stopButton);
-        actionsCell.appendChild(startButton);
-        row.appendChild(actionsCell);
-
-        userTableMemoryBody.appendChild(row);
+                userTableMemoryBody.appendChild(row);
+            });
+        } else {
+            // If user has no bots, show a placeholder row
+            const row = document.createElement('tr');
+            row.innerHTML = `<td colspan="10" style="text-align:center;">No bots found for this user.</td>`;
+            userTableMemoryBody.appendChild(row);
+        }
     });
 };
 

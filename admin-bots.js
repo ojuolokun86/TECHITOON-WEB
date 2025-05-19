@@ -19,7 +19,8 @@ const fetchAllBots = async () => {
                     <td>${bot.authId}</td>
                     <td>${bot.phoneNumber}</td>
                     <td>${bot.status}</td>
-                    <td>${bot.memoryUsage}</td>
+                    <td>${bot.ram || 'N/A'}</td>
+                    <td>${bot.rom || 'N/A'}</td>
                 `;
                 userBotsTable.appendChild(row);
             });
