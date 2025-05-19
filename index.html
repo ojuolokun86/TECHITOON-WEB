@@ -5,12 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login or Register</title>
     <link rel="stylesheet" href="styles.css">
+    <canvas id="matrix"></canvas>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
+<script type="module">
+import { showHackerTransition } from './hacker-transition.js';
+
+// Intercept all <a> clicks (except for #, mailto, tel, or _blank)
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href]').forEach(link => {
+        const url = link.getAttribute('href');
+        if (
+            url.startsWith('#') ||
+            url.startsWith('mailto:') ||
+            url.startsWith('tel:') ||
+            link.target === '_blank'
+        ) return;
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            showHackerTransition(url);
+        });
+    });
+});
+</script>
 <body>
+    <div id="hackerTransition" style="display:none;">
+  <canvas id="hackerTransitionCanvas"></canvas>
+</div>
     <div class="container">
         <header>
-            <img src="./image/logo.jpg" alt="Logo" class="logo">
+            <img src="./image/TECHITOON BOT_ Evolving Intelligence 2.png" alt="Logo" class="logo">
             <h1>Welcome to Techitoon Bot</h1>
             <h2>BMM Beyond Machine Mind</h2>
         </header>
@@ -65,6 +89,6 @@
         </p>
     </div>
 </footer>
-
+<script src="matrix.js"></script>
 </body>
 </html>

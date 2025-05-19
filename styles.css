@@ -16,73 +16,19 @@ body {
     justify-content: center;
 }
 
-/* Animated Stars Overlay */
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 300%;
-    height: 300%;
-    background: transparent;
-    background-image: 
-        radial-gradient(white 1px, transparent 1px),
-        radial-gradient(white 1px, transparent 1px);
-    background-size: 100px 100px;
-    background-position: 0 0, 50px 50px;
-    animation: moveStars 60s linear infinite;
-    opacity: 0.15;
-    z-index: 0;
-    pointer-events: none;
-}
-
-@keyframes moveStars {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(-500px, -500px);
-    }
-}
-
-
-/* Shining Stars Effect */
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
-    background-size: 2px 2px, 3px 3px, 4px 4px;
-    background-position: 0 0, 50px 50px, 100px 100px;
-    animation: stars 10s linear infinite;
-    z-index: 0; /* Place stars behind all content */
-}
-
-/* Stars Animation */
-@keyframes stars {
-    0% {
-        background-position: 0 0, 50px 50px, 100px 100px;
-    }
-    100% {
-        background-position: 100px 100px, 150px 150px, 200px 200px;
-    }
-}
-
 /* Container */
 .container {
     max-width: 900px;
     width: 90%;
-    margin: 20px auto;
-    padding: 20px;
-    background: rgba(30, 30, 47, 0.9); /* Semi-transparent black-blue background */
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    position: relative; /* Ensure content is above the stars */
-    z-index: 1; /* Place content above the stars */
+    margin: 30px auto 40px auto;
+    padding: 28px 20px 18px 20px;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    position: relative;
+    z-index: 1;
 }
+
 
 /* Header */
 header {
@@ -341,7 +287,7 @@ a:hover {
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        padding: 15px;
+        padding: 0px;
     }
 
     header h1 {
@@ -1245,11 +1191,11 @@ label {
 }
 
 #userBotsTable tr:nth-child(even), #metricsTable tr:nth-child(even) {
-    background: #232346;
+    background: transparent;
 }
 
 #userBotsTable tr:hover, #metricsTable tr:hover {
-    background: #2a2a3f;
+    background: transparent;
     transition: background 0.2s;
 }
 
@@ -1275,7 +1221,7 @@ section h2 {
 
 section {
     margin-bottom: 32px;
-    background: rgba(30, 30, 47, 0.97);
+    background: transparent;
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0,170,255,0.08);
     padding: 24px 18px;
@@ -1385,7 +1331,8 @@ section {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    background: rgba(24, 24, 40, 0.98);
+    background: transparent;
+    box-shadow: none;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 1px 6px rgba(0,170,255,0.06);
@@ -1450,7 +1397,7 @@ section {
 .subscription-badge {
     padding: 3px 12px;
     border-radius: 12px;
-    color: #fff;
+    color: hsl(0, 53%, 51%);
     font-weight: bold;
     margin-left: 6px;
     margin-right: 6px;
@@ -1481,12 +1428,12 @@ section {
 }
 
 .notification-card {
-    background: linear-gradient(90deg, #232346 80%, #1e1e2f 100%);
+    background: transparent;
     border-left: 6px solid #00aaff;
     border-radius: 10px;
     margin-bottom: 14px;
     padding: 18px 18px 14px 18px;
-    box-shadow: 0 2px 8px rgba(0,170,255,0.10);
+    box-shadow: none;
     transition: box-shadow 0.2s;
     position: relative;
 }
@@ -1560,7 +1507,7 @@ section {
     letter-spacing: 1px;
     border-left: 4px solid #00aaff;
     padding-left: 10px;
-    background: rgba(0,170,255,0.05);
+    background: transparent;
     border-radius: 4px;
 }
 .menu-list li {
@@ -1572,13 +1519,13 @@ section {
     padding: 6px 8px;
 }
 .menu-list li:hover {
-    background: rgba(0,170,255,0.08);
+    background: transparent;
 }
 .menu-command {
     color: #00aaff;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
-    background: rgba(0,170,255,0.10);
+    background: transparent;
     border-radius: 3px;
     padding: 2px 6px;
 }
@@ -1671,7 +1618,7 @@ section {
         min-width: 70px;
     }
     .container {
-        padding: 6px;
+        padding: 0%;
     }
 }
 
@@ -1708,12 +1655,13 @@ section {
     width: 90%;
     margin: 30px auto 40px auto;
     padding: 28px 20px 18px 20px;
-    background: rgba(30, 30, 47, 0.95);
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
     position: relative;
     z-index: 1;
 }
+
 
 header {
     text-align: center;
@@ -1721,7 +1669,7 @@ header {
 }
 
 header .logo {
-    max-width: 120px;
+    max-width: 150px;
     height: auto;
     display: block;
     margin: 0 auto 10px auto;
@@ -1786,7 +1734,7 @@ section a:hover {
 
 @media (max-width: 600px) {
     .container {
-        padding: 10px 4px 8px 4px;
+        padding: 0%;
     }
     header h1 {
         font-size: 1.2rem;
@@ -1802,12 +1750,12 @@ section a:hover {
 /* Footer Styles */
 .footer {
     width: 100%;
-    background: rgba(20, 30, 50, 0.98);
-    color: #e0e0e0;
+    background: transparent;
+    color: #282461;
     padding: 32px 0 18px 0;
     margin-top: 40px;
     border-top: 3px solid #00aaff;
-    box-shadow: 0 -2px 16px rgba(0,170,255,0.08);
+    box-shadow: none;
     position: relative;
     z-index: 2;
 }
@@ -1834,10 +1782,12 @@ section a:hover {
 }
 
 .footer-content p, .footer-content li {
-    color: #e0e0e0;
-    font-size: 1.05rem;
+    color: #c5e748;
+    font-size: 1.07rem;
     margin: 6px 0;
     line-height: 1.7;
+    font-weight: 200;
+    font-style: normal;
 }
 
 .footer-content ul {
@@ -1924,4 +1874,41 @@ section a:hover {
         padding: 10px 0;
         margin: 14px 0 0 0;
     }
+}
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    /* Keep your existing background image! */
+    background: url('./image/Beyond\ Machine\ Mind\ Circuitry.png') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    min-height: 100vh;
+}
+
+#matrix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    pointer-events: none;
+    z-index: 0; /* Behind your content */
+    opacity: 0.33; /* Adjust for blending with your background image */
+}
+#hackerTransition {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.98);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s;
+}
+#hackerTransitionCanvas {
+    width: 100vw;
+    height: 100vh;
+    display: block;
 }
