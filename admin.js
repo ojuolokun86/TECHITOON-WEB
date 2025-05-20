@@ -135,10 +135,33 @@ document.addEventListener('DOMContentLoaded', () => {
                     showAdminConfirmation('start', bot.phoneNumber, authId);
                 });
                 row.querySelector('.update-limits-btn').addEventListener('click', async () => {
-                    const maxRam = parseInt(row.querySelectorAll('input')[0].value, 10);
-                    const maxRom = parseInt(row.querySelectorAll('input')[1].value, 10);
-                    await updateMemoryLimits(bot.phoneNumber, maxRam, maxRom);
-                });
+    const maxRam = parseInt(row.querySelectorAll('input')[0].value, 10);
+    const maxRom = parseInt(row.querySelectorAll('input')[1].value, 10);
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/admin/users/${bot.phoneNumber}/memory-limits`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ maxRam, maxRom }),
+        });
+        const data = await response.json();
+        if (response.ok) {
+            displayMessage(`✅ Memory limits updated for user ${bot.phoneNumber}.`);
+            // Update the input fields and memory usage if returned
+            if (data.user) {
+                row.querySelectorAll('input')[0].value = data.user.max_ram || maxRam;
+                row.querySelectorAll('input')[1].value = data.user.max_rom || maxRom;
+                // Optionally update RAM/ROM usage columns if returned
+                if (data.user.ram !== undefined) row.cells[2].textContent = data.user.ram;
+                if (data.user.rom !== undefined) row.cells[3].textContent = data.user.rom;
+                if (data.user.memory_usage !== undefined) row.cells[6].textContent = data.user.memory_usage;
+            }
+        } else {
+            displayMessage(`❌ Failed to update memory limits for user ${bot.phoneNumber}: ${data.message}`, false);
+        }
+    } catch (error) {
+        displayMessage(`❌ Error updating memory limits for user ${bot.phoneNumber}.`, false);
+    }
+});
 
                 userTableMemoryBody.appendChild(row);
             });
