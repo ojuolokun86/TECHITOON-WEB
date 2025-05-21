@@ -1912,3 +1912,40 @@ body, html {
     height: 100vh;
     display: block;
 }
+
+/* Stylish form group for input fields */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+    background: rgba(30, 30, 47, 0.92);
+    padding: 14px 18px;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px rgba(0,170,255,0.08);
+}
+
+.form-group label {
+    color: #00aaff;
+    font-weight: 600;
+    font-size: 1.08rem;
+    margin-bottom: 2px;
+}
+
+.form-group select,
+.form-group input[type="text"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1.5px solid #00aaff;
+    border-radius: 6px;
+    background-color: #181828;
+    color: #e0e0e0;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group select:focus,
+.form-group input[type="text"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px #00aaff44;
+    background-color: #232346;
+}
