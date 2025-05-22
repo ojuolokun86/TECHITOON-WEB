@@ -1,6 +1,6 @@
 //const URL = 'https://bmm-bot-2-production.up.railway.app';
-const URL = 'http://localhost:3000'; // Replace with your actual URL
-//const URL = 'https://bmm-tech.onrender.com';
+//const URL = 'http://localhost:3000'; // Replace with your actual URL
+const URL = 'https://bmm-tech.onrender.com';
 
 
 
